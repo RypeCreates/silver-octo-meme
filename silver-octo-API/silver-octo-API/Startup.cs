@@ -29,6 +29,10 @@ namespace silver_octo_API
         {
             services.AddDbContext<IncomeContext>(opt =>
                opt.UseInMemoryDatabase("IncomeList"));
+            services.AddDbContext<ExpenseContext>(opt =>
+                opt.UseInMemoryDatabase("ExpenseList"));
+            services.AddDbContext<BudgetContext>(opt =>
+                opt.UseInMemoryDatabase("BudgetList"));
             services.AddControllers();
         }
 
