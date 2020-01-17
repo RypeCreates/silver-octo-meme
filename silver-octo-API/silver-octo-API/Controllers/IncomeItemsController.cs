@@ -9,7 +9,7 @@ using silver_octo_API.Models;
 
 namespace silver_octo_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/IncomeItems")]
     [ApiController]
     public class IncomeItemsController : ControllerBase
     {
@@ -58,7 +58,7 @@ namespace silver_octo_API.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
                 if (!IncomeItemExists(id))
                 {
@@ -66,7 +66,7 @@ namespace silver_octo_API.Controllers
                 }
                 else
                 {
-                    throw;
+                    throw e;
                 }
             }
 

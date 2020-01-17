@@ -9,7 +9,7 @@ using silver_octo_API.Models;
 
 namespace silver_octo_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/BudgetItems")]
     [ApiController]
     public class BudgetItemsController : ControllerBase
     {
@@ -58,7 +58,7 @@ namespace silver_octo_API.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
                 if (!BudgetItemExists(id))
                 {
@@ -66,7 +66,7 @@ namespace silver_octo_API.Controllers
                 }
                 else
                 {
-                    throw;
+                    throw e;
                 }
             }
 
@@ -84,6 +84,18 @@ namespace silver_octo_API.Controllers
 
             return CreatedAtAction("GetBudgetItem", new { id = budgetItem.Id }, budgetItem);
         }
+
+        // PATCH: api/BudgetItems
+        // TODO: Implement HttpPatch Functionality here
+        [HttpPatch]
+        public async Task<ActionResult<BudgetItem>> PatchBudgetItem(BudgetItem budgetItem)
+        {
+            _context.BudgetItem.Add(budgetItem);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetBudgetItem", new { id = budgetItem.Id }, budgetItem);
+        }
+
 
         // DELETE: api/BudgetItems/5
         [HttpDelete("{id}")]
