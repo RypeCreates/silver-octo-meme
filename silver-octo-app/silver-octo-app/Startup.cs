@@ -5,15 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using silver_octo_API.Models;  
+using Microsoft.AspNetCore.Mvc;
 
-namespace silver_octo_API
+namespace silver_octo_app
 {
     public class Startup
     {
@@ -27,15 +24,7 @@ namespace silver_octo_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<IncomeContext>(opt =>
-               opt.UseInMemoryDatabase("IncomeList"));
-            services.AddDbContext<ExpenseContext>(opt =>
-                opt.UseInMemoryDatabase("ExpenseList"));
-            services.AddDbContext<BudgetContext>(opt =>
-                opt.UseInMemoryDatabase("BudgetList"));
-            //services.AddControllers();                    // NOTE: Removed to test AddControllersWithViews function
             services.AddControllersWithViews();
-            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,30 +34,31 @@ namespace silver_octo_API
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
 
-            //app.UseDefaultFiles();
-
-            //app.UseStaticFiles();
-
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Home}/{action=Index}/{id?}");
-            //});
-
-            
-            // NOTE: Need to use this approach as it is most current
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapRazorPages();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action}/{id?}",
+                    defaults: new { controller = "Home", action = "Index" });
+                //endpoints.MapControllerRoute(
+                //    name: "itemsByEntryDate",
+                //    pattern: "{controller}/{action}/{month?}/{day?}",
+                //    defaults: new { controller = "BudgetItems", action = "ByEntryDate" },
+                //    constraints: new { month =@"[1-12]", day=@"[1-31]"});
             });
         }
     }

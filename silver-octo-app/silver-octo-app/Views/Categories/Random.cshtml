@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model silver_octo_app.ViewModels.RandomCategoryViewModel
+@{
+    ViewBag.Title = "Random";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var className = Model.ExpenseItems.Count > 5 ? "popular" : null;
+}
+<h2 class=@className>@Model.Category.Name</h2>
+
+@if (Model.ExpenseItems.Count.Equals(0))
+{
+    <textarea>No items in this category.</textarea>
+}
+else
+{
+    <ul>
+        @foreach (var expenseItem in Model.ExpenseItems)
+        {
+            <li>@expenseItem.Name</li>
+        }
+    </ul>
+}
+@*
+
+    This is how you write a comment in razor.
+
+*@

@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>silver_octo_app</RootNamespace>
+  </PropertyGroup>
+
+
+
+  <ItemGroup>
+    <Folder Include="Views\BudgetItems\" />
+    <Folder Include="Views\IncomeItems\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\Categories\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-darkly.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-darkly.css" />
+  </ItemGroup>
+</Project>
