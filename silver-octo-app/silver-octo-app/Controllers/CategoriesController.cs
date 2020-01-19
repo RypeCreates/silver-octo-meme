@@ -19,8 +19,8 @@ namespace silver_octo_app.Controllers
             var category = new Category { Name = "Coffee", Description = "The good stuff!" };
             var expenseItems = new List<ExpenseItem>
             {
-                new ExpenseItem { Name = "Item 1" },
-                new ExpenseItem { Name = "Item 2" }
+                new ExpenseItem { Name = "Grande Hot Latte" },
+                new ExpenseItem { Name = "Tall Pike Place Roast" }
             };
 
             var viewModel = new RandomCategoryViewModel
@@ -31,5 +31,25 @@ namespace silver_octo_app.Controllers
 
             return View(viewModel);
         }
+
+        // GET: Categories/ListCategories
+        [Route("categories/list")]
+        public ActionResult ListCategories()
+        {
+            var categories = new List<Category>
+            {
+                new Category { Name = "Coffee" },
+                new Category { Name = "Groceries" }
+            };
+
+            var viewModel = new ListCategoriesViewModel
+            {
+                Categories = categories
+            };
+
+            return View(viewModel);
+        }
     }
+
+
 }

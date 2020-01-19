@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using silver_octo_app.Models;
+using silver_octo_app.ViewModels;
 
 namespace silver_octo_app.Controllers
 {
@@ -54,6 +55,23 @@ namespace silver_octo_app.Controllers
             List<BudgetItem> BudgetList = new List<BudgetItem>();
 
             return View(BudgetList);
+        }
+
+        [Route("budgetItems/list")]
+        public ActionResult ListBudgetItems()
+        {
+            List<BudgetItem> budgetItems = new List<BudgetItem>
+            {
+               new BudgetItem { Category="Coffee",Amount=15.99},
+               new BudgetItem { Category="Groceries",Amount=50.99}
+            };
+
+            var viewModel = new ListBudgetItemsViewModel
+            {
+                BudgetItems = budgetItems
+            };
+
+            return View(viewModel);
         }
     }
 }
