@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using silver_octo_app.Models;
 
 namespace silver_octo_app
@@ -12,7 +11,13 @@ namespace silver_octo_app
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite("Data Source=silverOcto.db");
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+                {
+                }
     }
+
 
     //public class Blog
     //{
