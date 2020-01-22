@@ -12,11 +12,24 @@
     <Folder Include="Views\IncomeItems\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Views\Categories\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-darkly.css" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="blogging.db" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-darkly.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.1" />
   </ItemGroup>
 </Project>
