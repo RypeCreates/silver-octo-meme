@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using silver_octo_app.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace silver_octo_app
 {
@@ -10,7 +11,16 @@ namespace silver_octo_app
         public DbSet<BudgetItem> BudgetItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite("Data Source=silverOcto.db");
+        {
+            //options.UseSqlServer("Data Source=silverOcto.db");
+            options.UseSqlServer("Server=sqlserver1\\mssqllocaldb;Database=silverOctoDB;Trusted_Connection=True;MultipleActiveResultSets=true");
+        }
+        // TODO : Figure out how to resolve these hard-coded configuration strings.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddDbContext<ApplicationDbContext> (options =>
+                options.UseSqlServer("Server=sqlserver1\\mssqllocaldb;Database=silverOctoDB;Trusted_Connection=True;MultipleActiveResultSets=true"));
+        }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)

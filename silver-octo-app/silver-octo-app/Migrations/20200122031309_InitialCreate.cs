@@ -12,7 +12,7 @@ namespace silver_octo_app.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Autoincrement", true),
                     Category = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Amount = table.Column<double>(nullable: false),
@@ -28,7 +28,7 @@ namespace silver_octo_app.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true)
                 },

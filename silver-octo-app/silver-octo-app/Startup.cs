@@ -23,7 +23,7 @@ namespace silver_octo_app
         {
             // Add EF services to the services container.
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+                Configuration.GetConnectionString("SilverOctoDb"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
