@@ -13,13 +13,13 @@ namespace silver_octo_app
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             //options.UseSqlServer("Data Source=silverOcto.db");
-            options.UseSqlServer("Server=sqlserver1\\mssqllocaldb;Database=silverOctoDB;Trusted_Connection=True;MultipleActiveResultSets=true");
+            options.UseSqlServer("Server=localhost,1401;Database=silverOctoDB;User=sa;Password=YourStrong!Passw0rd;Trusted_Connection=False;MultipleActiveResultSets=true");
         }
         // TODO : Figure out how to resolve these hard-coded configuration strings.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext> (options =>
-                options.UseSqlServer("Server=sqlserver1\\mssqllocaldb;Database=silverOctoDB;Trusted_Connection=True;MultipleActiveResultSets=true"));
+                options.UseSqlServer("Server=localhost,1401;Database=silverOctoDB;User=sa;Password=YourStrong!Passw0rd;Trusted_Connection=False;MultipleActiveResultSets=true"));
         }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

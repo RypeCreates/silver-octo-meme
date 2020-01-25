@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace silver_octo_app.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitiateModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,11 +11,10 @@ namespace silver_octo_app.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Category = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    Amount = table.Column<double>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false)
+                    Amount = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,7 +26,7 @@ namespace silver_octo_app.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true)
                 },
