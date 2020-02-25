@@ -11,36 +11,69 @@ namespace silver_octo_app.Controllers
 {
     public class BudgetItemsController : Controller
     {
-        // Get: BudgetItems/Random
-        public ViewResult Random()
-        {
-            var budgetItem = new BudgetItem()
-            {
-                Amount = 1.00,
-                Category = "coffee",
-                Description ="all the caffeine I can spend."
-            };
-            return View(budgetItem);
+        private ApplicationDbContext _context;
 
+        public BudgetItemsController()
+        {
+            this._context = new ApplicationDbContext();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            // TODO: Not sure what disposing boolean is supposed to be here.
+            this._context.Dispose();
+        }
+
+        // Get: BudgetItems/Random
+        //public ViewResult Random()
+        //{
+        //    var budgetItem = new BudgetItem()
+        //    {
+        //        Amount = 1.00,
+        //        CategoryName = "coffee",
+        //        Description ="all the caffeine I can spend."
+        //    };
+        //    return View(budgetItem);
+
+        //}
 
         public ActionResult Edit(int id)
         {
             return Content("id=" + id);
         }
 
-        public ActionResult Index(int? pageIndex, string sortBy)
+        public ViewResult Index()
         {
-            if (!pageIndex.HasValue)
+            var budgetItems = this._context.BudgetItems.ToList();
+
+            return View(budgetItems);
+        }
+
+        //public ActionResult Index(int? pageIndex, string sortBy)
+        //{
+        //    if (!pageIndex.HasValue)
+        //    {
+        //        pageIndex = 1;
+        //    }
+        //    if(string.IsNullOrWhiteSpace(sortBy))
+        //    {
+        //        sortBy = "Category";
+        //    }
+
+        //    return Content(string.Format("pageIndex={0}@sortBy={1}", pageIndex, sortBy));
+        //}
+
+        [Route("budgetItems/details")]
+        public ActionResult Details(int id)
+        {
+            var budgetItem = _context.BudgetItems.SingleOrDefault(b => b.Id == id);
+
+            if (budgetItem == null)
             {
-                pageIndex = 1;
-            }
-            if(string.IsNullOrWhiteSpace(sortBy))
-            {
-                sortBy = "Category";
+                return StatusCode(404);
             }
 
-            return Content(string.Format("pageIndex={0}@sortBy={1}", pageIndex, sortBy));
+            return View(budgetItem);
         }
 
         [Route("budgetItems/entered/{month:range(1,12)}/{day}")]
@@ -49,22 +82,20 @@ namespace silver_octo_app.Controllers
             return Content(string.Format("{0}/{1}",month,day));
         }
 
-        [Route("budgetItems/categories/{category}")]
-        public ActionResult ByCategory(string category)
-        {
-            List<BudgetItem> BudgetList = new List<BudgetItem>();
+        //[Route("budgetItems/categories/{category}")]
+        //public ActionResult ByCategory(string category)
+        //{
+        //    List<BudgetItem> BudgetList = new List<BudgetItem>();
 
-            return View(BudgetList);
-        }
+        //    return View(BudgetList);
+        //}
 
         [Route("budgetItems/list")]
         public ActionResult ListBudgetItems()
         {
-            List<BudgetItem> budgetItems = new List<BudgetItem>
-            {
-               new BudgetItem { Category="Coffee",Amount=15.99},
-               new BudgetItem { Category="Groceries",Amount=50.99}
-            };
+            var budgetItems = this._context.BudgetItems.ToList();
+
+            //return View(budgetItems);
 
             var viewModel = new ListBudgetItemsViewModel
             {

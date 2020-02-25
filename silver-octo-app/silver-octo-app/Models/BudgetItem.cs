@@ -1,12 +1,20 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace silver_octo_app.Models
 {
     public class BudgetItem
     {
         public long Id { get; set; }
-        public string Category { get; set; }
+        [Required]
+        [StringLength(255)]
+        public string CategoryName { get; set; }
+        [StringLength(255)]
         public string Description { get; set; }
         public double Amount { get; set; }
+        public long UserId { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateUpdated { get; set; }
         //public DateTime Date { get; set; }    // NOTE: Having issues adding datetime2 to Azure Data Studio, converts to Text(48) which is invalid.
     }
 }

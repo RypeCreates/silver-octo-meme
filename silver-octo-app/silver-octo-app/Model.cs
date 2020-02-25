@@ -7,8 +7,9 @@ namespace silver_octo_app
     public class ApplicationDbContext : DbContext
     {
         // These DbSets create database tables based on the Models classes in the Models folder.
-        public DbSet<Category> Categories { get; set; }
+        //public DbSet<Category> Categories { get; set; }
         public DbSet<BudgetItem> BudgetItems { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
@@ -26,6 +27,10 @@ namespace silver_octo_app
         : base(options)
                 {
                 }
+
+        public ApplicationDbContext()
+        {
+        }
     }
 
 
