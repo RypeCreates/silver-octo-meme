@@ -2,7 +2,7 @@
 namespace silver_octo_app.Models
 {
     // NOTE: This model is currently deprecated
-    public class ExpenseItem
+    public class Expense
     {
         public long Id { get; set; }
         public string Name { get; set; }

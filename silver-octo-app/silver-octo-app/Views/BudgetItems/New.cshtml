@@ -1,0 +1,26 @@
+﻿@model silver_octo_app.Models.BudgetItem
+@{
+    ViewBag.Title = "New Budget Item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Budget Item</h2>
+
+@Html.BeginForm("Create", "BudgetItems")
+
+@using (Html.BeginForm("Create", "BudgetItems"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.CategoryName)
+        @Html.TextBoxFor(m => m.CategoryName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Amount)
+        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
+    </div>
+
+}

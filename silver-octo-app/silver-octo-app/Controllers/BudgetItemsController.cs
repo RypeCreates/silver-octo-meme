@@ -46,7 +46,7 @@ namespace silver_octo_app.Controllers
                 return StatusCode(404);
             }
 
-            return View(budgetItem.Id);
+            return View(budgetItem);
         }
 
         [Route("budgetItems/entered/{month:range(1,12)}/{day}")]
@@ -66,6 +66,11 @@ namespace silver_octo_app.Controllers
             };
 
             return View(viewModel);
+        }
+
+        public ActionResult New()
+        {
+            return View();
         }
     }
 }

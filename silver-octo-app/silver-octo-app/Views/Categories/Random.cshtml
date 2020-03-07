@@ -7,18 +7,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-    var className = Model.ExpenseItems.Count > 5 ? "popular" : null;
+    var className = Model.Expenses.Count > 5 ? "popular" : null;
 }
 <h2 class=@className>@Model.Category.Name</h2>
 
-@if (Model.ExpenseItems.Count.Equals(0))
+@if (Model.Expenses.Count.Equals(0))
 {
     <textarea>No items in this category.</textarea>
 }
 else
 {
     <ul>
-        @foreach (var expenseItem in Model.ExpenseItems)
+        @foreach (var expenseItem in Model.Expenses)
         {
             <li>@expenseItem.Name</li>
         }

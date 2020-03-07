@@ -13,6 +13,7 @@
     <Folder Include="ViewModels\" />
     <Folder Include="Views\Categories\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Views\Expenses\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-darkly.css" />

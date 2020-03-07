@@ -1,0 +1,35 @@
+﻿@model IEnumerable<silver_octo_app.Models.Expense>
+@{
+    ViewBag.Title = "Expenses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Expenses</h2>
+@if (!Model.Any())
+{
+    <p>We don't have any expense entries yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Entry Name</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var expense in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(expense.Name, "Details", "Expenses", new { id = expense.Id }, null)</td>
+                    <td>@expense.ExpenseAmount</td>
+                    <td>@expense.Category</td>
+                    <td>@expense.EntryDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -30,16 +30,16 @@ namespace silver_octo_app.Controllers
         public ActionResult Random()
         {
             var category = new Category { Name = "Coffee", Description = "The good stuff!" };
-            var expenseItems = new List<ExpenseItem>
+            var expenseItems = new List<Expense>
             {
-                new ExpenseItem { Name = "Grande Hot Latte" },
-                new ExpenseItem { Name = "Tall Pike Place Roast" }
+                new Expense { Name = "Grande Hot Latte" },
+                new Expense { Name = "Tall Pike Place Roast" }
             };
 
             var viewModel = new RandomCategoryViewModel
             {
                 Category = category,
-                ExpenseItems = expenseItems
+                Expenses = expenseItems
             };
 
             return View(viewModel);

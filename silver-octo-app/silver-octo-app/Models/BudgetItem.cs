@@ -8,6 +8,7 @@ namespace silver_octo_app.Models
         public long Id { get; set; }
         [Required]
         [StringLength(255)]
+        [Display(Name = "Name")]
         public string CategoryName { get; set; }
         [StringLength(255)]
         public string Description { get; set; }

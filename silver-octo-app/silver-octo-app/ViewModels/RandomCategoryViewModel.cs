@@ -7,6 +7,6 @@ namespace silver_octo_app.ViewModels
     public class RandomCategoryViewModel
     {
         public Category Category { get; set; }
-        public List<ExpenseItem> ExpenseItems { get; set; }
+        public List<Expense> Expenses { get; set; }
     }
 }
