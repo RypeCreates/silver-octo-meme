@@ -24,19 +24,6 @@ namespace silver_octo_app.Controllers
             this._context.Dispose();
         }
 
-        // Get: BudgetItems/Random
-        //public ViewResult Random()
-        //{
-        //    var budgetItem = new BudgetItem()
-        //    {
-        //        Amount = 1.00,
-        //        CategoryName = "coffee",
-        //        Description ="all the caffeine I can spend."
-        //    };
-        //    return View(budgetItem);
-
-        //}
-
         public ActionResult Edit(int id)
         {
             return Content("id=" + id);
@@ -49,21 +36,7 @@ namespace silver_octo_app.Controllers
             return View(budgetItems);
         }
 
-        //public ActionResult Index(int? pageIndex, string sortBy)
-        //{
-        //    if (!pageIndex.HasValue)
-        //    {
-        //        pageIndex = 1;
-        //    }
-        //    if(string.IsNullOrWhiteSpace(sortBy))
-        //    {
-        //        sortBy = "Category";
-        //    }
-
-        //    return Content(string.Format("pageIndex={0}@sortBy={1}", pageIndex, sortBy));
-        //}
-
-        [Route("budgetItems/details")]
+        [Route("budgetItems/{id}")]
         public ActionResult Details(int id)
         {
             var budgetItem = _context.BudgetItems.SingleOrDefault(b => b.Id == id);
@@ -73,7 +46,7 @@ namespace silver_octo_app.Controllers
                 return StatusCode(404);
             }
 
-            return View(budgetItem);
+            return View(budgetItem.Id);
         }
 
         [Route("budgetItems/entered/{month:range(1,12)}/{day}")]
@@ -82,20 +55,10 @@ namespace silver_octo_app.Controllers
             return Content(string.Format("{0}/{1}",month,day));
         }
 
-        //[Route("budgetItems/categories/{category}")]
-        //public ActionResult ByCategory(string category)
-        //{
-        //    List<BudgetItem> BudgetList = new List<BudgetItem>();
-
-        //    return View(BudgetList);
-        //}
-
         [Route("budgetItems/list")]
         public ActionResult ListBudgetItems()
         {
             var budgetItems = this._context.BudgetItems.ToList();
-
-            //return View(budgetItems);
 
             var viewModel = new ListBudgetItemsViewModel
             {
