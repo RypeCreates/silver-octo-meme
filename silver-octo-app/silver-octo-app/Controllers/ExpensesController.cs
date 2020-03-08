@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using silver_octo_app.ViewModels;
 using silver_octo_app.Models;
 
 namespace silver_octo_app.Controllers
@@ -13,6 +14,14 @@ namespace silver_octo_app.Controllers
         {
             this._context = new ApplicationDbContext();
         }
+
+        // TODO: THIS IS USED FOR MIGRATIONS
+        //private List<Expense> Expenses = new List<Expense>()
+        //{
+        //    new Expense {Id = 0, Name = "Latte", ExpenseAmount = (float)4.12, BudgetItemId = 3},
+        //    new Expense {Id = 1, Name = "sm Coffee", ExpenseAmount = (float)2.69, BudgetItemId = 3}
+        //};
+
 
         protected override void Dispose(bool disposing)
         {
@@ -28,7 +37,7 @@ namespace silver_octo_app.Controllers
             return View(expenses);
         }
 
-        [Route("expenses/{id}")]
+        [Route("Expenses/{id}")]
         public ActionResult Details(int id)
         {
             var expense = _context.Expenses.SingleOrDefault(b => b.Id == id);
@@ -43,7 +52,21 @@ namespace silver_octo_app.Controllers
 
         public ActionResult New()
         {
-            return View();
+            var categories = _context.BudgetItems.ToList();
+            var viewModel = new NewExpenseViewModel()
+            {
+                BudgetItems = categories
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Create(Expense expense)
+        {
+            _context.Expenses.Add(expense);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index","Expenses");
         }
     }
 }

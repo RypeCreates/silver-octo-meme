@@ -36,7 +36,7 @@ namespace silver_octo_app.Controllers
             return View(budgetItems);
         }
 
-        [Route("budgetItems/{id}")]
+        [Route("BudgetItems/{id}")]
         public ActionResult Details(int id)
         {
             var budgetItem = _context.BudgetItems.SingleOrDefault(b => b.Id == id);
@@ -49,13 +49,13 @@ namespace silver_octo_app.Controllers
             return View(budgetItem);
         }
 
-        [Route("budgetItems/entered/{month:range(1,12)}/{day}")]
+        [Route("BudgetItems/entered/{month:range(1,12)}/{day}")]
         public ActionResult ByEntryDate(int month, int day)
         {
             return Content(string.Format("{0}/{1}",month,day));
         }
 
-        [Route("budgetItems/list")]
+        [Route("BudgetItems/list")]
         public ActionResult ListBudgetItems()
         {
             var budgetItems = this._context.BudgetItems.ToList();

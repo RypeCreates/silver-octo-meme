@@ -26,7 +26,7 @@ else
                 <tr>
                     <td>@Html.ActionLink(expense.Name, "Details", "Expenses", new { id = expense.Id }, null)</td>
                     <td>@expense.ExpenseAmount</td>
-                    <td>@expense.Category</td>
+                    <td>@expense.BudgetItemId</td>
                     <td>@expense.EntryDate</td>
                 </tr>
             }

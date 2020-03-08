@@ -1,0 +1,25 @@
+﻿@model silver_octo_app.ViewModels.NewExpenseViewModel
+@{
+    ViewBag.Title = "New Expense";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Expense</h2>
+
+@using (Html.BeginForm("Create", "Expenses"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Expense.Name)
+        @Html.TextBoxFor(m => m.Expense.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Expense.ExpenseAmount)
+        @Html.TextBoxFor(m => m.Expense.ExpenseAmount, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Expense.BudgetItemId)
+        @Html.DropDownListFor(m => m.Expense.BudgetItemId, new SelectList(Model.BudgetItems, "Id","CategoryName"),"Select Category", new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+
+}

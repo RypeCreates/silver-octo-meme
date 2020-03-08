@@ -1,14 +1,23 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace silver_octo_app.Models
 {
-    // NOTE: This model is currently deprecated
     public class Expense
     {
         public long Id { get; set; }
+
         public string Name { get; set; }
-        public string Category { get; set; }    // FK reference to categories table
+
+        [Display(Name="Category")]
+        public long BudgetItemId { get; set; }
+
+        [Display(Name="Cost")]
         public float ExpenseAmount { get; set; }
+
         public DateTime EntryDate { get; set; }
+
+        [Display(Name="Date Made")]
         public DateTime ExpenseDate { get; set; }
     }
 }
