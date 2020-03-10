@@ -24,9 +24,9 @@ else
             @foreach (var expense in Model)
             {
                 <tr>
-                    <td>@Html.ActionLink(expense.Name, "Details", "Expenses", new { id = expense.Id }, null)</td>
+                    <td>@Html.ActionLink(expense.Name, "Edit", "Expenses", new { id = expense.Id }, null)</td>
                     <td>@expense.ExpenseAmount</td>
-                    <td>@expense.BudgetItemId</td>
+                    <td>@expense.BudgetItem.CategoryName</td>
                     <td>@expense.EntryDate</td>
                 </tr>
             }

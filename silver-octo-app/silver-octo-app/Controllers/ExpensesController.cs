@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using silver_octo_app.ViewModels;
@@ -32,7 +32,8 @@ namespace silver_octo_app.Controllers
 
         public ViewResult Index()
         {
-            var expenses = _context.Expenses.ToList();
+            var expenses = _context.Expenses.Include(e => e.BudgetItem).ToList();
+            //var expenses = _context.Expenses.ToList();
 
             return View(expenses);
         }
@@ -50,14 +51,36 @@ namespace silver_octo_app.Controllers
             return View(expense);
         }
 
+
+        [Route("Expenses/Edit/{id}")]
+        public ActionResult Edit(int id)
+        {
+            var expense = _context.Expenses.SingleOrDefault(e => e.Id == id);
+
+            if(expense == null)
+            {
+                return StatusCode(404);
+            }
+
+            var categories = _context.BudgetItems.ToList();
+            var viewModel = new ExpenseFormViewModel()
+            {
+                Expense = expense,
+                BudgetItems = categories
+            };
+
+            return View("ExpenseForm", viewModel);
+        }
+
+
         public ActionResult New()
         {
             var categories = _context.BudgetItems.ToList();
-            var viewModel = new NewExpenseViewModel()
+            var viewModel = new ExpenseFormViewModel()
             {
                 BudgetItems = categories
             };
-            return View(viewModel);
+            return View("ExpenseForm",viewModel);
         }
 
         [HttpPost]

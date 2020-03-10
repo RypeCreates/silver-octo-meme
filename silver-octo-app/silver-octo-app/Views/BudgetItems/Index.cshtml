@@ -23,7 +23,7 @@ else
             @foreach (var budgetItem in Model)
             {
                 <tr>
-                    <td>@Html.ActionLink(budgetItem.CategoryName, "Details", "BudgetItems", new { id = budgetItem.Id }, null)</td>
+                    <td>@Html.ActionLink(budgetItem.CategoryName, "Edit", "BudgetItems", new { id = budgetItem.Id }, null)</td>
                     <td>@budgetItem.Amount</td>
                     <td>@budgetItem.Description</td>
                 </tr>

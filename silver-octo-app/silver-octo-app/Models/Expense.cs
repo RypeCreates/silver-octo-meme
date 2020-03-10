@@ -12,6 +12,8 @@ namespace silver_octo_app.Models
         [Display(Name="Category")]
         public long BudgetItemId { get; set; }
 
+        public BudgetItem BudgetItem { get; set; }
+
         [Display(Name="Cost")]
         public float ExpenseAmount { get; set; }
 

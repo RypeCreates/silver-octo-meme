@@ -24,10 +24,19 @@ namespace silver_octo_app.Controllers
             this._context.Dispose();
         }
 
+        [Route("BudgetItems/Edit/{id}")]
         public ActionResult Edit(int id)
         {
-            return Content("id=" + id);
+            var budgetItem = _context.BudgetItems.SingleOrDefault(b => b.Id == id);
+
+            if (budgetItem == null)
+            {
+                return StatusCode(404);
+            }
+
+            return View("BudgetItemForm",budgetItem);
         }
+
 
         public ViewResult Index()
         {
@@ -36,7 +45,7 @@ namespace silver_octo_app.Controllers
             return View(budgetItems);
         }
 
-        [Route("BudgetItems/{id}")]
+        [Route("BudgetItems/Details{id}")]
         public ActionResult Details(int id)
         {
             var budgetItem = _context.BudgetItems.SingleOrDefault(b => b.Id == id);
@@ -70,7 +79,18 @@ namespace silver_octo_app.Controllers
 
         public ActionResult New()
         {
-            return View();
+            return View("BudgetItemForm");
         }
+
+        [HttpPost]
+        public ActionResult Create(BudgetItem budgetItem)
+        {
+            _context.BudgetItems.Add(budgetItem);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "BudgetItems");
+        }
+
+
     }
 }

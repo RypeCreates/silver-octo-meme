@@ -4,9 +4,9 @@ using silver_octo_app.Models;
 
 namespace silver_octo_app.ViewModels
 {
-    public class NewExpenseViewModel
+    public class ExpenseFormViewModel
     {
-        public NewExpenseViewModel()
+        public ExpenseFormViewModel()
         {
 
         }
