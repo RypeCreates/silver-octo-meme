@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using silver_octo_app.Models;
 using silver_octo_app.ViewModels;
@@ -33,7 +30,7 @@ namespace silver_octo_app.Controllers
             {
                 return StatusCode(404);
             }
-
+            ViewBag.Title = "Edit Budget Item";
             return View("BudgetItemForm",budgetItem);
         }
 
@@ -79,6 +76,7 @@ namespace silver_octo_app.Controllers
 
         public ActionResult New()
         {
+            ViewBag.Title = "New Budget Item";
             return View("BudgetItemForm");
         }
 
@@ -91,6 +89,34 @@ namespace silver_octo_app.Controllers
             return RedirectToAction("Index", "BudgetItems");
         }
 
+        [HttpPost]
+        public ActionResult Save(BudgetItem budgetItem)
+        {
+            if(budgetItem.Id == 0) // if new budgetItem
+            {
+                _context.BudgetItems.Add(budgetItem);
+            }
+            else
+            {
+                var budgetItemInDb = _context.BudgetItems.Single(b => b.Id == budgetItem.Id);
+                budgetItemInDb.Amount = budgetItem.Amount;
+                budgetItemInDb.CategoryName = budgetItem.CategoryName;
+                budgetItemInDb.DateUpdated = budgetItem.DateUpdated;
+                budgetItemInDb.Description = budgetItem.Description;
+            }
+
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return RedirectToAction("Index", "BudgetItems");
+        }
 
     }
 }

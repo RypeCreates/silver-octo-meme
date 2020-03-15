@@ -1,10 +1,9 @@
 ﻿@model silver_octo_app.ViewModels.ExpenseFormViewModel
 @{
-    ViewBag.Title = "New Expense";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>New Expense</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm("Create", "Expenses"))
 {

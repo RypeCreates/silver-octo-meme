@@ -4,7 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Budget Items</h2>
+<h2>@ViewBag.Title</h2>
+
 @if (!Model.Any())
 {
     <p>We don't have any budget items yet.</p>
@@ -30,4 +31,8 @@ else
             }
         </tbody>
     </table>
+}
+@using (Html.BeginForm("New", "BudgetItems"))
+{
+    <button type="submit" class="btn btn-primary">New Item</button>
 }

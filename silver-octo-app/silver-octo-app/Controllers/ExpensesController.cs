@@ -68,7 +68,7 @@ namespace silver_octo_app.Controllers
                 Expense = expense,
                 BudgetItems = categories
             };
-
+            ViewBag.Title = "Edit Expense Entry";
             return View("ExpenseForm", viewModel);
         }
 
@@ -80,6 +80,7 @@ namespace silver_octo_app.Controllers
             {
                 BudgetItems = categories
             };
+            ViewBag.Title = "New Expense Entry";
             return View("ExpenseForm",viewModel);
         }
 
@@ -90,6 +91,27 @@ namespace silver_octo_app.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index","Expenses");
+        }
+
+
+        [HttpPost]
+        public ActionResult Save(Expense expense)
+        {
+            if(expense.Id == 0) // if new expense
+            {
+                _context.Expenses.Add(expense);
+            }
+            else
+            {
+                var expenseInDb = _context.Expenses.Single(e => e.Id == expense.Id);
+                expenseInDb.Name = expense.Name;
+                expenseInDb.ExpenseAmount = expense.ExpenseAmount;
+                expenseInDb.ExpenseDate = expense.ExpenseDate;
+                expenseInDb.BudgetItem = expense.BudgetItem;
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Expenses");
         }
     }
 }
