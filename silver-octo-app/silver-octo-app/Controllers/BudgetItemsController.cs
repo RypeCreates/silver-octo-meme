@@ -77,7 +77,8 @@ namespace silver_octo_app.Controllers
         public ActionResult New()
         {
             ViewBag.Title = "New Budget Item";
-            return View("BudgetItemForm");
+            BudgetItem budgetItem = new BudgetItem();
+            return View("BudgetItemForm",budgetItem);
         }
 
         [HttpPost]
@@ -92,7 +93,12 @@ namespace silver_octo_app.Controllers
         [HttpPost]
         public ActionResult Save(BudgetItem budgetItem)
         {
-            if(budgetItem.Id == 0) // if new budgetItem
+            if (string.IsNullOrEmpty(budgetItem.CategoryName) || !ModelState.IsValid)
+            {
+                return View("BudgetItemForm", budgetItem);
+            }
+
+            if (budgetItem.Id == 0) // if new budgetItem
             {
                 _context.BudgetItems.Add(budgetItem);
             }

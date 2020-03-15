@@ -75,10 +75,10 @@ namespace silver_octo_app.Controllers
 
         public ActionResult New()
         {
-            var categories = _context.BudgetItems.ToList();
             var viewModel = new ExpenseFormViewModel()
             {
-                BudgetItems = categories
+                Expense = new Expense(),
+                BudgetItems = _context.BudgetItems.ToList()
             };
             ViewBag.Title = "New Expense Entry";
             return View("ExpenseForm",viewModel);
@@ -97,6 +97,18 @@ namespace silver_octo_app.Controllers
         [HttpPost]
         public ActionResult Save(Expense expense)
         {
+
+            if(string.IsNullOrEmpty(expense.Name) || !ModelState.IsValid)
+            {
+                var viewModel = new ExpenseFormViewModel()
+                {
+                    Expense = expense,
+                    BudgetItems = _context.BudgetItems.ToList()
+                };
+
+                return View("ExpenseForm", viewModel);
+            }
+
             if(expense.Id == 0) // if new expense
             {
                 _context.Expenses.Add(expense);
