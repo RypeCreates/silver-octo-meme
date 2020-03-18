@@ -98,7 +98,7 @@ namespace silver_octo_app.Controllers
         public ActionResult Save(Expense expense)
         {
 
-            if(string.IsNullOrEmpty(expense.Name) || !ModelState.IsValid)
+            if(string.IsNullOrEmpty(expense.Name) || expense.BudgetItemId.Equals(null) || !ModelState.IsValid)
             {
                 var viewModel = new ExpenseFormViewModel()
                 {
@@ -119,7 +119,7 @@ namespace silver_octo_app.Controllers
                 expenseInDb.Name = expense.Name;
                 expenseInDb.ExpenseAmount = expense.ExpenseAmount;
                 expenseInDb.ExpenseDate = expense.ExpenseDate;
-                expenseInDb.BudgetItem = expense.BudgetItem;
+                expenseInDb.BudgetItemId = expense.BudgetItemId;
             }
             _context.SaveChanges();
 

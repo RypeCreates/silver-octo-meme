@@ -11,8 +11,9 @@ namespace silver_octo_app.Models
         public string Name { get; set; }
 
         [Display(Name="Category")]
-        [Required]
+        [Required(ErrorMessage ="Please specify a Category.")]
         public long BudgetItemId { get; set; }
+
 
         public BudgetItem BudgetItem { get; set; }
 
