@@ -95,6 +95,7 @@ namespace silver_octo_app.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Expense expense)
         {
 

@@ -91,6 +91,7 @@ namespace silver_octo_app.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(BudgetItem budgetItem)
         {
             if (string.IsNullOrEmpty(budgetItem.CategoryName) || !ModelState.IsValid)

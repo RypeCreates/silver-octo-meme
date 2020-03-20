@@ -24,10 +24,6 @@
         @Html.ValidationMessageFor(m => m.Amount)
     </div>
     @Html.HiddenFor(m => m.Id)
+    @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Save</button>
-}
-
-@section scripts
-{
-    @Scripts.Render("~/lib/bootstrap/dist/js/bootstrap.bundle.min.js")
 }
