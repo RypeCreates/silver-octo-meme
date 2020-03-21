@@ -6,33 +6,80 @@
 
 <h2>@ViewBag.Title</h2>
 
-@if (!Model.Any())
-{
-    <p>We don't have any budget items yet.</p>
-}
-else
-{
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Budget Item</th>
-                <th>Amount</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var budgetItem in Model)
-            {
-                <tr>
-                    <td>@Html.ActionLink(budgetItem.CategoryName, "Edit", "BudgetItems", new { id = budgetItem.Id }, null)</td>
-                    <td>@budgetItem.Amount</td>
-                    <td>@budgetItem.Description</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+<table id="budgetItems" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Budget Item</th>
+            <th>Amount</th>
+            <th>Description</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 @using (Html.BeginForm("New", "BudgetItems"))
 {
     <button type="submit" class="btn btn-primary">New Item</button>
+}
+@section Scripts
+{
+    <script>$(document).ready(function () {
+
+            $("#budgetItems").DataTable({
+                ajax: {
+                    url: "/api/BudgetItems",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "categoryName",
+                        render: function (data, type, budgetItem) {
+                            return "<a href='/BudgetItems/Edit/" + budgetItem['id'] + "'>" + data + "</a>";
+                        }
+                    },
+                    {
+                        data: "amount"
+                    },
+                    {
+                        data: "description"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-delete' data-budgetItem-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+
+            });
+
+            $("#budgetItems").on("click", ".js-delete", function () {
+                var button = $(this);
+
+                bootbox.confirm("Are you sure you want to delete this budget category?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/BudgetItems/" + button.attr("data-budgetItem-id"),
+                            method: "DELETE",
+                            success: function () {
+                                button.parents("tr").remove();
+                            }
+                        });
+                    }
+                });
+
+
+
+                //if (confirm("Are you sure you want to delete this budget category?")) {
+                //    $.ajax({
+                //        url: "/api/BudgetItems/" + $(this).attr("data-budgetItem-id"),
+                //        method: "DELETE",
+                //        success: function () {
+                //            button.parents("tr").remove();
+                //        }
+                //    });
+                //}
+            });
+        });</script>
 }

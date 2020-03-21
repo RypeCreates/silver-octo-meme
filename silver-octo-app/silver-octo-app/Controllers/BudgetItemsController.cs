@@ -37,9 +37,7 @@ namespace silver_octo_app.Controllers
 
         public ViewResult Index()
         {
-            var budgetItems = this._context.BudgetItems.ToList();
-
-            return View(budgetItems);
+            return View();
         }
 
         [Route("BudgetItems/Details{id}")]
