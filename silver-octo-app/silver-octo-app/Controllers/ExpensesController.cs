@@ -32,10 +32,7 @@ namespace silver_octo_app.Controllers
 
         public ViewResult Index()
         {
-            var expenses = _context.Expenses.Include(e => e.BudgetItem).ToList();
-            //var expenses = _context.Expenses.ToList();
-
-            return View(expenses);
+            return View();
         }
 
         [Route("Expenses/{id}")]

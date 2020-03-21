@@ -5,35 +5,73 @@
 }
 
 <h2>Expenses</h2>
-@if (!Model.Any())
-{
-    <p>We don't have any expense entries yet.</p>
-}
-else
-{
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Entry Name</th>
-                <th>Amount</th>
-                <th>Category</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var expense in Model)
-            {
-                <tr>
-                    <td>@Html.ActionLink(expense.Name, "Edit", "Expenses", new { id = expense.Id }, null)</td>
-                    <td>@expense.ExpenseAmount</td>
-                    <td>@expense.BudgetItem.CategoryName</td>
-                    <td>@expense.EntryDate</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+
+<table id="expenses" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Entry Name</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 @using (Html.BeginForm("New", "Expenses"))
 {
     <button type="submit" class="btn btn-primary">New Entry</button>
+}
+@section Scripts
+{
+    <script>$(document).ready(function () {
+
+            var table = $("#expenses").DataTable({
+                ajax: {
+                    url: "/api/Expenses",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, expense) {
+                            return "<a href='/Expenses/Edit/" + expense['id'] + "'>" + data + "</a>";
+                        }
+                    },
+                    {
+                        data: "expenseAmount"
+                    },
+                    {
+                        data: "budgetItem.categoryName"
+                    },
+                    {
+                        data: "expenseDate"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-delete' data-expense-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+
+            });
+
+            $("#expenses").on("click", ".js-delete", function () {
+                var button = $(this);
+
+                bootbox.confirm("Are you sure you want to delete this expense item?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/Expenses/" + button.attr("data-expense-id"),
+                            method: "DELETE",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+            });
+        });</script>
 }

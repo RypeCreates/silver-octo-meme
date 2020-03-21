@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using silver_octo_app.Models;
 
@@ -21,9 +21,13 @@ namespace silver_octo_app.Controllers.Api
         }
 
         [HttpGet]
-        public IEnumerable<Expense> GetExpenses()
+        public IActionResult GetExpenses()
         {
-            return _context.Expenses.ToList();
+            var expenses = _context.Expenses
+                .Include(e => e.BudgetItem)
+                .ToList();
+
+            return Ok(expenses);
         }
 
         [HttpGet("{id}")]
@@ -70,7 +74,6 @@ namespace silver_octo_app.Controllers.Api
             _context.SaveChanges();
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
         public void DeleteExpense(long id)
         {
