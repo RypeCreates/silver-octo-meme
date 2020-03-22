@@ -16,6 +16,8 @@
     <Folder Include="Views\Expenses\" />
     <Folder Include="Controllers\Api\" />
     <Folder Include="wwwroot\lib\bootbox\" />
+    <Folder Include="Services\" />
+    <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-darkly.css" />

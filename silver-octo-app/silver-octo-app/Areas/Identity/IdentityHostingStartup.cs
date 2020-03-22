@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using silver_octo_app.Areas.Identity.Data;
+using silver_octo_app.Models;
 
 [assembly: HostingStartup(typeof(silver_octo_app.Areas.Identity.IdentityHostingStartup))]
 namespace silver_octo_app.Areas.Identity
@@ -19,8 +20,8 @@ namespace silver_octo_app.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("IdentityDataContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<IdentityDataContext>();
+                //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                //    .AddEntityFrameworkStores<IdentityDataContext>();
             });
         }
     }

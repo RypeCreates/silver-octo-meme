@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using silver_octo_app.Models;
+using silver_octo_app.Services;
 
 namespace silver_octo_app
 {
@@ -30,6 +31,8 @@ namespace silver_octo_app
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+            //services.AddTransient<IEmailSender, YourEmailSender>();
+            //services.AddTransient<IEmailSender, YourSmsSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
