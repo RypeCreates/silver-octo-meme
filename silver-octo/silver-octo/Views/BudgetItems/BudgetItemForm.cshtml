@@ -1,0 +1,29 @@
+﻿@model silver_octo.Models.BudgetItem
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Save", "BudgetItems"))
+{
+    @Html.ValidationSummary(true, "Please fix the following errors")
+    <div class="form-group">
+        @Html.LabelFor(m => m.CategoryName)
+        @Html.TextBoxFor(m => m.CategoryName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CategoryName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Description)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Amount)
+        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Amount)
+    </div>
+    @Html.HiddenFor(m => m.Id)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}

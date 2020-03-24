@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using silver_octo_app.Models;
 using silver_octo_app.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace silver_octo_app
 {
@@ -28,9 +31,19 @@ namespace silver_octo_app
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders().AddSignInManager();
 
-            services.AddMvc();
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                     .RequireAuthenticatedUser()
+                     .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+
+           
+            //services.AddMvc();
+
             //services.AddTransient<IEmailSender, YourEmailSender>();
             //services.AddTransient<IEmailSender, YourSmsSender>();
         }
@@ -68,6 +81,8 @@ namespace silver_octo_app
                 //    defaults: new { controller = "BudgetItems", action = "ByEntryDate" },
                 //    constraints: new { month =@"[1-12]", day=@"[1-31]"});
             });
+
+
         }
     }
 }

@@ -58,6 +58,7 @@ namespace silver_octo_app.Controllers
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
@@ -552,6 +553,8 @@ namespace silver_octo_app.Controllers
         {
             if (Url.IsLocalUrl(returnUrl))
             {
+                //return RedirectToAction("Index", "Home");
+                var current_user = _userManager.GetUserAsync(HttpContext.User);
                 return Redirect(returnUrl);
             }
             else

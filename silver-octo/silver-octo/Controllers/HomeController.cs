@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using silver_octo_app.Models;
-using Microsoft.AspNetCore.Authorization;
+using silver_octo.Models;
 
-namespace silver_octo_app.Controllers
+namespace silver_octo.Controllers
 {
     [AllowAnonymous]
     public class HomeController : Controller

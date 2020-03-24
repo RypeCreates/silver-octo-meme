@@ -3,19 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using silver_octo_app;
+using silver_octo.Data;
 
-namespace silver_octo_app.Migrations
+namespace silver_octo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200324192508_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -150,7 +152,7 @@ namespace silver_octo_app.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("silver_octo_app.Models.ApplicationUser", b =>
+            modelBuilder.Entity("silver_octo.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -215,7 +217,7 @@ namespace silver_octo_app.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("silver_octo_app.Models.BudgetItem", b =>
+            modelBuilder.Entity("silver_octo.Models.BudgetItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -248,7 +250,7 @@ namespace silver_octo_app.Migrations
                     b.ToTable("BudgetItems");
                 });
 
-            modelBuilder.Entity("silver_octo_app.Models.Expense", b =>
+            modelBuilder.Entity("silver_octo.Models.Expense", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -289,7 +291,7 @@ namespace silver_octo_app.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("silver_octo_app.Models.ApplicationUser", null)
+                    b.HasOne("silver_octo.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -298,7 +300,7 @@ namespace silver_octo_app.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("silver_octo_app.Models.ApplicationUser", null)
+                    b.HasOne("silver_octo.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -313,7 +315,7 @@ namespace silver_octo_app.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("silver_octo_app.Models.ApplicationUser", null)
+                    b.HasOne("silver_octo.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -322,16 +324,16 @@ namespace silver_octo_app.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("silver_octo_app.Models.ApplicationUser", null)
+                    b.HasOne("silver_octo.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("silver_octo_app.Models.Expense", b =>
+            modelBuilder.Entity("silver_octo.Models.Expense", b =>
                 {
-                    b.HasOne("silver_octo_app.Models.BudgetItem", "BudgetItem")
+                    b.HasOne("silver_octo.Models.BudgetItem", "BudgetItem")
                         .WithMany()
                         .HasForeignKey("BudgetItemId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -2,11 +2,13 @@
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using silver_octo_app.Models;
-using silver_octo_app.ViewModels;
+using silver_octo.Models;
+using silver_octo.Data;
+using silver_octo.ViewModels;
 
-namespace silver_octo_app.Controllers
+namespace silver_octo.Controllers
 {
+    [Authorize]
     public class BudgetItemsController : Controller
     {
         private ApplicationDbContext _context;
@@ -32,7 +34,7 @@ namespace silver_octo_app.Controllers
                 return StatusCode(404);
             }
             ViewBag.Title = "Edit Budget Item";
-            return View("BudgetItemForm",budgetItem);
+            return View("BudgetItemForm", budgetItem);
         }
 
 
@@ -54,30 +56,11 @@ namespace silver_octo_app.Controllers
             return View(budgetItem);
         }
 
-        [Route("BudgetItems/entered/{month:range(1,12)}/{day}")]
-        public ActionResult ByEntryDate(int month, int day)
-        {
-            return Content(string.Format("{0}/{1}",month,day));
-        }
-
-        [Route("BudgetItems/list")]
-        public ActionResult ListBudgetItems()
-        {
-            var budgetItems = this._context.BudgetItems.ToList();
-
-            var viewModel = new ListBudgetItemsViewModel
-            {
-                BudgetItems = budgetItems
-            };
-
-            return View(viewModel);
-        }
-
         public ActionResult New()
         {
             ViewBag.Title = "New Budget Item";
             BudgetItem budgetItem = new BudgetItem();
-            return View("BudgetItemForm",budgetItem);
+            return View("BudgetItemForm", budgetItem);
         }
 
         [HttpPost]

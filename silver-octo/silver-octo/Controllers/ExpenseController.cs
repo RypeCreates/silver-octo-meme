@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using silver_octo_app.ViewModels;
-using silver_octo_app.Models;
+using silver_octo.ViewModels;
+using silver_octo.Models;
+using silver_octo.Data;
 using Microsoft.AspNetCore.Authorization;
 
-namespace silver_octo_app.Controllers
+namespace silver_octo.Controllers
 {
+    [Authorize]
     public class ExpensesController : Controller
     {
         private ApplicationDbContext _context;
@@ -15,14 +17,6 @@ namespace silver_octo_app.Controllers
         {
             this._context = new ApplicationDbContext();
         }
-
-        // TODO: THIS IS USED FOR MIGRATIONS
-        //private List<Expense> Expenses = new List<Expense>()
-        //{
-        //    new Expense {Id = 0, Name = "Latte", ExpenseAmount = (float)4.12, BudgetItemId = 3},
-        //    new Expense {Id = 1, Name = "sm Coffee", ExpenseAmount = (float)2.69, BudgetItemId = 3}
-        //};
-
 
         protected override void Dispose(bool disposing)
         {
@@ -55,7 +49,7 @@ namespace silver_octo_app.Controllers
         {
             var expense = _context.Expenses.SingleOrDefault(e => e.Id == id);
 
-            if(expense == null)
+            if (expense == null)
             {
                 return StatusCode(404);
             }
@@ -79,7 +73,7 @@ namespace silver_octo_app.Controllers
                 BudgetItems = _context.BudgetItems.ToList()
             };
             ViewBag.Title = "New Expense Entry";
-            return View("ExpenseForm",viewModel);
+            return View("ExpenseForm", viewModel);
         }
 
         [HttpPost]
@@ -88,7 +82,7 @@ namespace silver_octo_app.Controllers
             _context.Expenses.Add(expense);
             _context.SaveChanges();
 
-            return RedirectToAction("Index","Expenses");
+            return RedirectToAction("Index", "Expenses");
         }
 
 
@@ -97,7 +91,7 @@ namespace silver_octo_app.Controllers
         public ActionResult Save(Expense expense)
         {
 
-            if(string.IsNullOrEmpty(expense.Name) || expense.BudgetItemId.Equals(null) || !ModelState.IsValid)
+            if (string.IsNullOrEmpty(expense.Name) || expense.BudgetItemId.Equals(null) || !ModelState.IsValid)
             {
                 var viewModel = new ExpenseFormViewModel()
                 {
@@ -108,7 +102,7 @@ namespace silver_octo_app.Controllers
                 return View("ExpenseForm", viewModel);
             }
 
-            if(expense.Id == 0) // if new expense
+            if (expense.Id == 0) // if new expense
             {
                 _context.Expenses.Add(expense);
             }
