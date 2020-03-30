@@ -5,6 +5,7 @@ using silver_octo.ViewModels;
 using silver_octo.Models;
 using silver_octo.Data;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace silver_octo.Controllers
 {
@@ -69,7 +70,10 @@ namespace silver_octo.Controllers
         {
             var viewModel = new ExpenseFormViewModel()
             {
-                Expense = new Expense(),
+                Expense = new Expense()
+                {
+                    EntryDate = DateTime.Now
+                },
                 BudgetItems = _context.BudgetItems.ToList()
             };
             ViewBag.Title = "New Expense Entry";

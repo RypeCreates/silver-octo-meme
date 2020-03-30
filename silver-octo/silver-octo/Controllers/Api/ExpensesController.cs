@@ -49,6 +49,8 @@ namespace silver_octo.Controllers.Api
 
             if (ModelState.IsValid)
             {
+                expense.EntryDate = DateTime.Now;
+
                 _context.Expenses.Add(expense);
                 _context.SaveChanges();
 
@@ -71,6 +73,7 @@ namespace silver_octo.Controllers.Api
             expenseInDb.ExpenseDate = expense.ExpenseDate;
             expenseInDb.ExpenseAmount = expense.ExpenseAmount;
             expenseInDb.BudgetItemId = expense.BudgetItemId;
+
 
             _context.SaveChanges();
         }

@@ -25,5 +25,6 @@
     <Folder Include="Views\BudgetItems\" />
     <Folder Include="Views\Expenses\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="wwwroot\lib\bootbox\" />
   </ItemGroup>
 </Project>

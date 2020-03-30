@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using silver_octo.Models;
 using silver_octo.Data;
 using silver_octo.ViewModels;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace silver_octo.Controllers
 {
@@ -12,9 +14,11 @@ namespace silver_octo.Controllers
     public class BudgetItemsController : Controller
     {
         private ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public BudgetItemsController()
+        public BudgetItemsController(UserManager<ApplicationUser> userManager)
         {
+            this._userManager = userManager;
             this._context = new ApplicationDbContext();
         }
 
@@ -66,6 +70,9 @@ namespace silver_octo.Controllers
         [HttpPost]
         public ActionResult Create(BudgetItem budgetItem)
         {
+            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            //budgetItem.ApplicationUserId = userId;
             _context.BudgetItems.Add(budgetItem);
             _context.SaveChanges();
 

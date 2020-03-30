@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace silver_octo.Models
 {
@@ -25,5 +26,9 @@ namespace silver_octo.Models
 
         [Display(Name = "Date Made")]
         public DateTime ExpenseDate { get; set; }
+
+        //public string ApplicationUserId { get; set; }
+        //[ForeignKey("ApplicationUserId")]
+        //public ApplicationUser ApplicationUser { get; set; }
     }
 }
