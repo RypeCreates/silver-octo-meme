@@ -23,8 +23,7 @@ namespace silver_octo.Models
 
         public DateTime DateUpdated { get; set; }
 
-        //public string ApplicationUserId { get; set; }
-        //[ForeignKey("ApplicationUserId")]
-        //public ApplicationUser ApplicationUser { get; set; }
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

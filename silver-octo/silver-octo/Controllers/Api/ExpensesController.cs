@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using silver_octo.Models;
 using silver_octo.Data;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,7 +25,9 @@ namespace silver_octo.Controllers.Api
         [HttpGet]
         public IActionResult GetExpenses()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var expenses = _context.Expenses
+                .Where(e => e.ApplicationUserId == userId)
                 .Include(e => e.BudgetItem)
                 .ToList();
 
@@ -46,10 +49,13 @@ namespace silver_octo.Controllers.Api
         [HttpPost]
         public IActionResult CreateExpense([FromBody]Expense expense)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            expense.ApplicationUserId = userId;
 
             if (ModelState.IsValid)
             {
                 expense.EntryDate = DateTime.Now;
+                expense.ExpenseDate = DateTime.Now.Date;
 
                 _context.Expenses.Add(expense);
                 _context.SaveChanges();
@@ -88,6 +94,8 @@ namespace silver_octo.Controllers.Api
             if (expenseInDb == null) throw new Exception();
 
             _context.Expenses.Remove(expenseInDb);
+
+            _context.SaveChanges();
         }
     }
 }

@@ -47,24 +47,6 @@ namespace silver_octo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BudgetItems",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(maxLength: 255, nullable: false),
-                    Description = table.Column<string>(maxLength: 255, nullable: true),
-                    Amount = table.Column<double>(nullable: false),
-                    UserId = table.Column<long>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: false),
-                    DateUpdated = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BudgetItems", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -110,8 +92,8 @@ namespace silver_octo.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    ProviderKey = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -155,8 +137,8 @@ namespace silver_octo.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    Name = table.Column<string>(maxLength: 128, nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -171,6 +153,30 @@ namespace silver_octo.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BudgetItems",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryName = table.Column<string>(maxLength: 255, nullable: false),
+                    Description = table.Column<string>(maxLength: 255, nullable: true),
+                    Amount = table.Column<double>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateUpdated = table.Column<DateTime>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BudgetItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BudgetItems_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Expenses",
                 columns: table => new
                 {
@@ -180,11 +186,18 @@ namespace silver_octo.Migrations
                     BudgetItemId = table.Column<long>(nullable: false),
                     ExpenseAmount = table.Column<float>(nullable: false),
                     EntryDate = table.Column<DateTime>(nullable: false),
-                    ExpenseDate = table.Column<DateTime>(nullable: false)
+                    ExpenseDate = table.Column<DateTime>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Expenses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Expenses_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Expenses_BudgetItems_BudgetItemId",
                         column: x => x.BudgetItemId,
@@ -233,6 +246,16 @@ namespace silver_octo.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BudgetItems_ApplicationUserId",
+                table: "BudgetItems",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Expenses_ApplicationUserId",
+                table: "Expenses",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Expenses_BudgetItemId",
                 table: "Expenses",
                 column: "BudgetItemId");
@@ -262,10 +285,10 @@ namespace silver_octo.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "BudgetItems");
 
             migrationBuilder.DropTable(
-                name: "BudgetItems");
+                name: "AspNetUsers");
         }
     }
 }

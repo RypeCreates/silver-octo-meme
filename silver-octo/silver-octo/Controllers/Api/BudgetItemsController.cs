@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using silver_octo.Models;
 using silver_octo.Data;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,7 +24,8 @@ namespace silver_octo.Controllers.Api
         [HttpGet]
         public IEnumerable<BudgetItem> GetBudgetItems()
         {
-            return _context.BudgetItems.ToList();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return _context.BudgetItems.Where(b => b.ApplicationUserId == userId).ToList();
         }
 
         [HttpGet("{id}")]
@@ -42,6 +44,8 @@ namespace silver_octo.Controllers.Api
         [HttpPost]
         public IActionResult CreateBudgetItem([FromBody]BudgetItem budgetItem)
         {
+            budgetItem.DateCreated = DateTime.Now;
+            budgetItem.DateUpdated = DateTime.Now;
 
             if (ModelState.IsValid)
             {
@@ -58,6 +62,8 @@ namespace silver_octo.Controllers.Api
         [HttpPut("{id}")]
         public void UpdateBudgetItem(long id, BudgetItem budgetItem)
         {
+            budgetItem.DateUpdated = DateTime.Now;
+
             if (!ModelState.IsValid) throw new Exception();
 
             var budgetItemInDb = _context.BudgetItems.SingleOrDefault(b => b.Id == id);
@@ -83,6 +89,7 @@ namespace silver_octo.Controllers.Api
             if (budgetItemInDb == null) throw new Exception();
 
             _context.BudgetItems.Remove(budgetItemInDb);
+            _context.SaveChanges();
         }
     }
 }

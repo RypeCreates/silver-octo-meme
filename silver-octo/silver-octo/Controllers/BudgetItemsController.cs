@@ -67,17 +67,20 @@ namespace silver_octo.Controllers
             return View("BudgetItemForm", budgetItem);
         }
 
-        [HttpPost]
-        public ActionResult Create(BudgetItem budgetItem)
-        {
-            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //[HttpPost]
+        //public ActionResult Create(BudgetItem budgetItem)
+        //{
+        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            //budgetItem.ApplicationUserId = userId;
-            _context.BudgetItems.Add(budgetItem);
-            _context.SaveChanges();
+        //    budgetItem.ApplicationUserId = userId;
+        //    budgetItem.DateCreated = DateTime.Now;
+        //    budgetItem.DateUpdated = DateTime.Now;
 
-            return RedirectToAction("Index", "BudgetItems");
-        }
+        //    _context.BudgetItems.Add(budgetItem);
+        //    _context.SaveChanges();
+
+        //    return RedirectToAction("Index", "BudgetItems");
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -90,10 +93,17 @@ namespace silver_octo.Controllers
 
             if (budgetItem.Id == 0) // if new budgetItem
             {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                budgetItem.ApplicationUserId = userId;
+                budgetItem.DateCreated = DateTime.Now;
+                budgetItem.DateUpdated = DateTime.Now;
+
                 _context.BudgetItems.Add(budgetItem);
             }
             else
             {
+                budgetItem.DateUpdated = DateTime.Now;
+
                 var budgetItemInDb = _context.BudgetItems.Single(b => b.Id == budgetItem.Id);
                 budgetItemInDb.Amount = budgetItem.Amount;
                 budgetItemInDb.CategoryName = budgetItem.CategoryName;
