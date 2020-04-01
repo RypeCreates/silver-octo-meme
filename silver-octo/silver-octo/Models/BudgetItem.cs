@@ -17,6 +17,7 @@ namespace silver_octo.Models
         public string Description { get; set; }
 
         [Required]
+        [Display(Name = "Amount ($)")]
         public double Amount { get; set; }
 
         public DateTime DateCreated { get; set; }

@@ -41,7 +41,10 @@ $(document).ready(function () {
                 }
             },
                     {
-            data: "amount"
+                        data: "amount",
+                        render: function (data) {
+                            return "<td>$" + data.toFixed(2) + "</td>";
+                        }
                     },
                     {
             data: "description"

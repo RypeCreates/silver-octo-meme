@@ -41,7 +41,10 @@ $(document).ready(function () {
                         }
                     },
                     {
-                        data: "expenseAmount"
+                        data: "expenseAmount",
+                        render: function (data) {
+                            return "<td>$"+data.toFixed(2)+"</td>";
+                        }
                     },
                     {
                         data: "budgetItem.categoryName"

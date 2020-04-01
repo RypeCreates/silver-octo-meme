@@ -19,12 +19,13 @@ namespace silver_octo.Models
         public BudgetItem BudgetItem { get; set; }
 
         [Required]
-        [Display(Name = "Cost")]
+        [Display(Name = "Cost ($)")]
         public float ExpenseAmount { get; set; }
 
         public DateTime EntryDate { get; set; }
 
         [Display(Name = "Date Made")]
+        [DisplayFormat(DataFormatString ="{0:dd MMM yyyy}", ApplyFormatInEditMode =true)]
         public DateTime ExpenseDate { get; set; }
 
         public string ApplicationUserId { get; set; }
